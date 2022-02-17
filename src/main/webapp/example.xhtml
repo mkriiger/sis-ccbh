@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:f="http://java.sun.com/jsf/core"
+				xmlns:ui="http://java.sun.com/jsf/facelets"
+				xmlns:p="http://primefaces.org/ui" 
+				xmlns:pe="http://primefaces.org/ui/extensions"
+				template="_template.xhtml">
+
+<f:event listener="#{menuBean.preRender()}" type="preRenderView" />
+
+<f:metadata>
+	<f:event type="preRenderView" listener="#{menuBean.preRender()}" />	
+</f:metadata>
+
+<ui:define name="content">
+	<p:outputLabel value="#{exampleBean.hello}" />		            	
+</ui:define>
+
+</ui:composition>

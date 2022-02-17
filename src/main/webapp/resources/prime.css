@@ -1,0 +1,44 @@
+.ui-widget,
+.ui-widget .ui-widget 
+{
+    font-size: 13px;
+    font-family: Verdana, sans-serif;
+}
+
+.ui-menubar
+.ui-menu-list
+.ui-menuitem
+.ui-menuitem-link
+.ui-menuitem-text
+{
+	font-size: 15px;
+	font-weight: bold;
+	font-family: Helvetica, sans-serif;
+}
+
+.noBorder td {
+    border: none;
+}
+
+body .ui-treetable tbody tr td
+{
+	border: 1px solid lightgrey;
+}
+
+.ui-growl-message 
+{
+	float: left;
+	color: cadetblue;
+	word-wrap:break-word !important;
+	overflow-wrap: break-word !important;
+	width: 85%;
+}
+
+.ui - icon.fa {
+   text - indent: 0 px;
+   background - image: none;
+}
+
+.noheader.ui-datatable table thead {
+    display: none;
+}

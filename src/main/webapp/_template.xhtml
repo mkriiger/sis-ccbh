@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:pe="http://primefaces.org/ui/extensions">
+ 
+<f:view contentType="text/html">
+     <h:head>
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+        </f:facet>
+        <h:outputStylesheet name="prime.css" />
+        <h:outputStylesheet library="webjars" name="font-awesome/5.15.4/css/all-jsf.css" />
+        <h:outputStylesheet library="webjars" name="primeflex/2.0.0/primeflex.min.css" />
+    </h:head>
+ 
+     <h:body>
+ 		 <p:growl id="messages" life="10000" />
+         
+         <h:form id="menuForm">
+			<p:menubar model="#{menuBean.menu}" />	 
+		</h:form>
+		
+		<div class="main" style="min-height: 800px;">			
+			<div class="content">
+				<ui:insert name="content"/>				
+			</div>			
+		</div> 
+     </h:body>
+</f:view>
+</html>
