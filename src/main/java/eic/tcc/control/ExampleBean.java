@@ -16,7 +16,7 @@ public class ExampleBean extends _Bean
 	//
 	// Attributes
 	//
-	private String hello = "EXAMPLE HELLO";
+	private String hello = "HELLO WORLD!";
 	
 	public String getHello() {
 		return hello;
