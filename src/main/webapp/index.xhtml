@@ -13,8 +13,25 @@
 	<f:event type="preRenderView" listener="#{menuBean.preRender()}" />	
 </f:metadata>
 
+
 <ui:define name="content">
+		  
+
+	<h:form>
+	
+		<h:panelGrid columns="3">
+		  
+			<h:outputLabel value="testar query no bd (ccbh_id):"/>
+			<h:inputText value="#{exampleBean.id}" required="true"/>
+		  
+		</h:panelGrid>
+		
+		<h:commandButton value="testar" action="#{exampleBean.query}"/>
+	
+	</h:form> 
+		  
 		            
 </ui:define>
+
 
 </ui:composition>

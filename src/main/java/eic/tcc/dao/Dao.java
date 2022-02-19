@@ -34,7 +34,7 @@ public interface Dao
 	 * @param id Id do objeto 
 	 * @return Objeto recuperado pelo Id ou NULL caso o ID não exista
 	 */ 
-	public <ENTITY> ENTITY retrieveById(Class<ENTITY> clazz,Long id);
+	public <ENTITY> ENTITY retrieveById(Class<ENTITY> clazz,String id);
 	
 	/**
 	 * Recupera todos os objetos do tipo gerenciado pelo DAO

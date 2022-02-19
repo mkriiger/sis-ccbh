@@ -21,4 +21,9 @@ public class Ccbh {
 
 	@Column
 	private Integer length;
+	
+	@Override
+	public String toString() {
+		return "ID: " + this.id + "\nSEQ NAME: " + this.seqName + "\nDESCRIPTION: " + this.description + "\nLENGTH: " + this.length;
+	}
 }
