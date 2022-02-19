@@ -30,6 +30,9 @@
 *.tar.gz
 *.rar
 
+# Personal config files #
+*/spring-servlet.xml
+
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 >>>>>>> 10dbe5a854b0a9495588bcf87ab33a5438c6fbf8
