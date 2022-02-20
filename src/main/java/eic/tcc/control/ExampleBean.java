@@ -36,6 +36,8 @@ public class ExampleBean extends _Bean {
 		// Query query = entitymanager.createNamedQuery("findByGoName");
 		// query.setParameter("name", this.id);
 		// List<CcbhBlast> list = query.getResultList();
+		
+		System.out.println(dao.queryHQL("SELECT e FROM CcbhBlast e WHERE e.blast.name LIKE CONCAT('%', :name, '%')", this.id));
 	}
 
 	public String getHello() {
