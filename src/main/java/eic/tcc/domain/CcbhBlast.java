@@ -6,12 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_ccbh_blast2go")
-@NamedQuery(name = "findByGoName", query = "SELECT e FROM CcbhBlast e WHERE e.blast.name LIKE CONCAT('%', :name, '%')")
 public class CcbhBlast implements Serializable {
 
 	/**
