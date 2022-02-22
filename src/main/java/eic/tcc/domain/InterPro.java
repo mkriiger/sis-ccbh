@@ -23,10 +23,4 @@ public class InterPro {
 	public String getName() {
 		return name;
 	}
-
-	@Override
-	public String toString() {
-		return "INTERPRO GO ID: " + this.id + " INTERPRO GO NAME: " + this.name + "\n";
-	}
-
 }

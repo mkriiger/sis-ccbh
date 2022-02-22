@@ -8,8 +8,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tb_ccbh_blast2go")
-public class CcbhBlast implements Serializable {
+@Table(name = "tb_ccbh_interpro")
+public class CcbhInter implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -20,14 +20,14 @@ public class CcbhBlast implements Serializable {
 
 	@Id
 	@ManyToOne
-	@JoinColumn(name = "blast2go_go_id")
-	private Blast2Go blast;
+	@JoinColumn(name = "interpro_go_id")
+	private InterPro inter;
 
 	public Ccbh getCcbh() {
 		return ccbh;
 	}
 
-	public Blast2Go getBlast() {
-		return blast;
+	public InterPro getInter() {
+		return inter;
 	}
 }

@@ -23,10 +23,4 @@ public class Blast2Go {
 	public String getName() {
 		return name;
 	}
-
-	@Override
-	public String toString() {
-		return "BLAST2GO GO ID: " + this.id + " BLAST2GO GO NAME: " + this.name + "\n";
-	}
-
 }
