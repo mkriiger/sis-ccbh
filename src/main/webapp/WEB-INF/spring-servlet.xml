@@ -74,9 +74,9 @@
 		
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
 	     <property name="driverClassName" value="com.mysql.jdbc.Driver" /> 
-	     <property name="url" value="jdbc:mysql://localhost:3306/nct?useSSL=false" /> 
+	     <property name="url" value="jdbc:mysql://localhost:3306/db_ccbh?useSSL=false" /> 
 	     <property name="username" value="root" /> 
-	     <property name="password" value="root" />	 	
+	     <property name="password" value="mysql" />	 	
 	     <property name="initialSize" value="3" />
 	     <property name="maxTotal" value="10" />	     
 	</bean>		
