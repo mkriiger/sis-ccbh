@@ -34,9 +34,9 @@ body .ui-treetable tbody tr td
 	width: 85%;
 }
 
-.ui - icon.fa {
-   text - indent: 0 px;
-   background - image: none;
+.ui icon.fa {
+   text-indent: 0 px;
+   background-image: none;
 }
 
 .noheader.ui-datatable table thead {

@@ -20,6 +20,7 @@ public class ExampleBean extends _Bean {
 
 	private String id;
 	private String nomeGo;
+	private String nomeEnzima;
 
 	public void query() {
 
@@ -31,6 +32,10 @@ public class ExampleBean extends _Bean {
 
 	private List<?> buscarPorNomeGoInter() {
 		return dao.queryHQL("SELECT e FROM CcbhInter e WHERE e.inter.name LIKE '%" + this.nomeGo + "%'");
+	}
+	
+	private List<?> buscarPorNomeEnzyme() {
+		return dao.queryHQL("SELECT e FROM CcbhEnzyme e WHERE e.enzyme.name LIKE '%" + this.nomeEnzima + "%'");
 	}
 
 	public String getHello() {
@@ -51,5 +56,13 @@ public class ExampleBean extends _Bean {
 
 	public void setNomeGo(String nomeGo) {
 		this.nomeGo = nomeGo;
+	}
+
+	public String getNomeEnzima() {
+		return nomeEnzima;
+	}
+
+	public void setNomeEnzima(String nomeEnzima) {
+		this.nomeEnzima = nomeEnzima;
 	}
 }
