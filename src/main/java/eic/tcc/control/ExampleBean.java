@@ -1,10 +1,12 @@
 package eic.tcc.control;
 
 import java.util.List;
+import javax.faces.event.ValueChangeEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import eic.tcc.dao.Dao;
+import eic.tcc.domain.enums.Categoria;
 
 @Controller(value = "exampleBean")
 @Scope("session")
@@ -17,37 +19,53 @@ public class ExampleBean extends _Bean {
 	// Attributes
 	//
 	private String hello = "HELLO WORLD!";
-
-	private String id;
 	private String nomeGo;
 	private String nomeEnzima;
+	private String categoriaSelecionada;
 
+	//
+	// apagar toda esta query de testes
+	//
 	public void query() {
 
+		this.verificarNulo();
+
+		//
+		// teste busca com filtro de categoria
+		//
+		System.out.println(dao.queryHQL("SELECT e FROM CcbhInter e WHERE e.inter.name LIKE '"
+				+ this.categoriaSelecionada + "%" + this.nomeGo + "%'").size());
 	}
 
 	private List<?> buscarPorNomeGoBlast() {
-		return dao.queryHQL("SELECT e FROM CcbhBlast e WHERE e.blast.name LIKE '%" + this.nomeGo + "%'");
+
+		this.verificarNulo();
+		return dao.queryHQL("SELECT e FROM CcbhBlast e WHERE e.blast.name LIKE '" + this.categoriaSelecionada + "%"
+				+ this.nomeGo + "%'");
 	}
 
 	private List<?> buscarPorNomeGoInter() {
-		return dao.queryHQL("SELECT e FROM CcbhInter e WHERE e.inter.name LIKE '%" + this.nomeGo + "%'");
+
+		this.verificarNulo();
+		return dao.queryHQL("SELECT e FROM CcbhInter e WHERE e.inter.name LIKE '" + this.categoriaSelecionada + "%"
+				+ this.nomeGo + "%'");
 	}
-	
+
 	private List<?> buscarPorNomeEnzyme() {
 		return dao.queryHQL("SELECT e FROM CcbhEnzyme e WHERE e.enzyme.name LIKE '%" + this.nomeEnzima + "%'");
 	}
 
+	private void verificarNulo() {
+		if (categoriaSelecionada == null)
+			categoriaSelecionada = "";
+	}
+
+	public void selecionarCategoria(ValueChangeEvent event) {
+		categoriaSelecionada = (String) event.getNewValue();
+	}
+
 	public String getHello() {
 		return hello;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public String getNomeGo() {
@@ -64,5 +82,9 @@ public class ExampleBean extends _Bean {
 
 	public void setNomeEnzima(String nomeEnzima) {
 		this.nomeEnzima = nomeEnzima;
+	}
+
+	public Categoria[] getCategorias() {
+		return Categoria.values();
 	}
 }
