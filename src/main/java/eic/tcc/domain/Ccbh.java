@@ -1,5 +1,7 @@
 package eic.tcc.domain;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -37,4 +39,29 @@ public class Ccbh {
 	public Integer getLength() {
 		return length;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Ccbh other = (Ccbh) obj;
+		return Objects.equals(id, other.id);
+	}
+
+	//TODO remover após testes
+	@Override
+	public String toString() {
+		return "Ccbh [id=" + id + ", seqName=" + seqName + ", description=" + description + ", length=" + length + "]";
+	}
+	
+	
 }

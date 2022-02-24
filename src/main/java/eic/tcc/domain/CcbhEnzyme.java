@@ -31,5 +31,13 @@ public class CcbhEnzyme implements Serializable {
 	public Enzyme getEnzyme() {
 		return enzyme;
 	}
+
+	//TODO remover após testes
+	@Override
+	public String toString() {
+		return "CcbhEnzyme: ccbh= " + ccbh + ", enzyme= " + enzyme + "\n";
+	}
+	
+	
 	
 }

@@ -19,7 +19,8 @@ public class MenuBean extends _Bean
 	
 	public MenuBean()
 	{
-		addMenuItem("Example","Example","example.jsf");		
+		addMenuItem("Menu","Início","index.jsf");
+		addMenuItem("Menu","Sobre","index.jsf");
 	}
 	
 	private void addMenuItem(String subMenuName, String menuItemName, String URL)
