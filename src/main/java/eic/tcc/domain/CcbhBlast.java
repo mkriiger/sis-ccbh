@@ -1,6 +1,7 @@
 package eic.tcc.domain;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -23,6 +24,12 @@ public class CcbhBlast implements Serializable {
 	@JoinColumn(name = "blast2go_go_id")
 	private Blast2Go blast;
 
+	@Column(name = "blast2go_e_value")
+	private String eValue;
+
+	@Column(name = "blast2go_hits")
+	private String hits;
+
 	public Ccbh getCcbh() {
 		return ccbh;
 	}
@@ -30,4 +37,24 @@ public class CcbhBlast implements Serializable {
 	public Blast2Go getBlast() {
 		return blast;
 	}
+
+	public String geteValue() {
+		return eValue;
+	}
+
+	public String getHits() {
+		return hits;
+	}
+	
+	
+	
+	
+	
+	@Override
+	public String toString() {
+		return "\nNOME BLAST: " + this.blast.getName() + "\nEVALUE: " + this.eValue + "\nHITS: " + this.hits;
+	}
+	
+	
+	
 }

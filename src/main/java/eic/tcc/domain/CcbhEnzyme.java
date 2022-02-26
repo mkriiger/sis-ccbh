@@ -1,7 +1,6 @@
 package eic.tcc.domain;
 
 import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -18,7 +17,7 @@ public class CcbhEnzyme implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "ccbh_id")
 	private Ccbh ccbh;
-	
+
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "enzyme_code")
@@ -31,13 +30,4 @@ public class CcbhEnzyme implements Serializable {
 	public Enzyme getEnzyme() {
 		return enzyme;
 	}
-
-	//TODO remover após testes
-	@Override
-	public String toString() {
-		return "CcbhEnzyme: ccbh= " + ccbh + ", enzyme= " + enzyme + "\n";
-	}
-	
-	
-	
 }

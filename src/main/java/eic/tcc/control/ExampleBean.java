@@ -1,15 +1,18 @@
 package eic.tcc.control;
 
-import java.util.ArrayList;
 import java.util.List;
+
 import javax.faces.event.ValueChangeEvent;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+
 import eic.tcc.dao.Dao;
-import eic.tcc.domain.CcbhEnzyme;
+import eic.tcc.domain.Ccbh;
+import eic.tcc.domain.CcbhBlast;
+import eic.tcc.domain.Enzyme;
 import eic.tcc.domain.enums.Categoria;
-import eic.tcc.domain.vo.SearchResult;
 
 @Controller(value = "exampleBean")
 @Scope("session")
@@ -21,6 +24,7 @@ public class ExampleBean extends _Bean {
 	//
 	// Attributes
 	//
+	private String hello = "HELLO WORLD!";
 	private String nomeGo;
 	private String nomeEnzima;
 	private String categoriaSelecionada;
@@ -30,16 +34,31 @@ public class ExampleBean extends _Bean {
 	//
 	public void query() {
 
-//		this.verificarNulo();
-//
-//		//
-//		// teste busca com filtro de categoria
-//		//
-//		System.out.println(dao.queryHQL("SELECT e FROM CcbhInter e WHERE e.inter.name LIKE '"
-//				+ this.categoriaSelecionada + "%" + this.nomeGo + "%'").size());
-		List<CcbhEnzyme> enzymeList = buscarPorNomeEnzyme();
-		SearchResult result = new SearchResult(enzymeList);
-		System.out.println(result);
+		this.verificarNulo();
+
+		//
+		// query teste busca por nome enzima
+		//
+		List<Enzyme> listaEnzimas = (List<Enzyme>) dao.queryHQL("SELECT e FROM Enzyme e WHERE e.name LIKE '%" + this.nomeEnzima + "%'");
+		
+		for (Enzyme e : listaEnzimas) {
+		
+			// OK
+			//Enzyme e = dao.retrieveById(Enzyme.class, "EC:1.1.1.1");
+			
+			// OK
+			e.setListaCcbh((List<Ccbh>) dao.queryHQL("SELECT ce.ccbh FROM CcbhEnzyme ce WHERE ce.enzyme.code like '" + e.getCode() + "'"));
+		
+			// OK
+			for (Ccbh c : e.getListaCcbh()) {
+				//c.setListaBlast((List<Blast2Go>) dao.queryHQL("SELECT cb.blast FROM CcbhBlast cb WHERE cb.ccbh.id like '" + c.getId() + "'"));
+			
+				c.setListaCcbhBlast((List<CcbhBlast>) dao.queryHQL("SELECT cb FROM CcbhBlast cb WHERE cb.ccbh.id like '" + c.getId() + "'"));
+			
+				System.out.println(c.getId());
+				System.out.println(c.getListaCcbhBlast());
+			}
+		}
 	}
 
 	private List<?> buscarPorNomeGoBlast() {
@@ -56,8 +75,8 @@ public class ExampleBean extends _Bean {
 				+ this.nomeGo + "%'");
 	}
 
-	private List<CcbhEnzyme> buscarPorNomeEnzyme() {
-		return (List<CcbhEnzyme>) dao.queryHQL("SELECT e FROM CcbhEnzyme e WHERE e.enzyme.name LIKE '%" + this.nomeEnzima + "%'");
+	private List<?> buscarPorNomeEnzyme() {
+		return dao.queryHQL("SELECT e FROM CcbhEnzyme e WHERE e.enzyme.name LIKE '%" + this.nomeEnzima + "%'");
 	}
 
 	private void verificarNulo() {
@@ -69,6 +88,9 @@ public class ExampleBean extends _Bean {
 		categoriaSelecionada = (String) event.getNewValue();
 	}
 
+	public String getHello() {
+		return hello;
+	}
 
 	public String getNomeGo() {
 		return nomeGo;

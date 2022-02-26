@@ -85,7 +85,7 @@ public class DaoImpl implements Dao
 	
 	@Override
 	@Transactional
-	public <ENTITY> ENTITY retrieveById(Class<ENTITY> clazz, Long id) 
+	public <ENTITY> ENTITY retrieveById(Class<ENTITY> clazz, String id) 
     {
 		ENTITY entity = (ENTITY)sessionFactory.getCurrentSession().get(clazz, id);
         return entity;

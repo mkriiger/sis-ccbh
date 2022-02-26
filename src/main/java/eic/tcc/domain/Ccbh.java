@@ -1,11 +1,12 @@
 package eic.tcc.domain;
 
-import java.util.Objects;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "tb_ccbh")
@@ -23,7 +24,17 @@ public class Ccbh {
 
 	@Column
 	private Integer length;
+	
+	
+	
+	@Transient
+	private List<Blast2Go> listaBlast;
+	
+	@Transient
+	private List<CcbhBlast> listaCcbhBlast;
 
+	
+	
 	public String getId() {
 		return id;
 	}
@@ -40,28 +51,41 @@ public class Ccbh {
 		return length;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
+	
+	
+	
+	
+	
+	
+	
+	
+	public List<Blast2Go> getListaBlast() {
+		return listaBlast;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Ccbh other = (Ccbh) obj;
-		return Objects.equals(id, other.id);
+	public void setListaBlast(List<Blast2Go> listaBlast) {
+		this.listaBlast = listaBlast;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	public List<CcbhBlast> getListaCcbhBlast() {
+		return listaCcbhBlast;
 	}
 
-	//TODO remover após testes
+	public void setListaCcbhBlast(List<CcbhBlast> listaCcbhBlast) {
+		this.listaCcbhBlast = listaCcbhBlast;
+	}
+
 	@Override
 	public String toString() {
-		return "Ccbh [id=" + id + ", seqName=" + seqName + ", description=" + description + ", length=" + length + "]";
+		return "\nCCBH ID: " + this.id;
 	}
-	
-	
 }
