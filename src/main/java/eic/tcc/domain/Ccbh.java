@@ -26,14 +26,18 @@ public class Ccbh {
 	private Integer length;
 	
 	
-	
-	@Transient
-	private List<Blast2Go> listaBlast;
+// TROCADA PELA LISTA DE BAIXO	
+//	@Transient
+//	private List<Blast2Go> listaBlast;
 	
 	@Transient
 	private List<CcbhBlast> listaCcbhBlast;
-
 	
+	@Transient
+	private List<CcbhInter> listaCcbhInter;
+
+	@Transient
+	private List<CcbhEnzyme> listaCcbhEnzyme;
 	
 	public String getId() {
 		return id;
@@ -59,13 +63,13 @@ public class Ccbh {
 	
 	
 	
-	public List<Blast2Go> getListaBlast() {
-		return listaBlast;
-	}
-
-	public void setListaBlast(List<Blast2Go> listaBlast) {
-		this.listaBlast = listaBlast;
-	}
+//	public List<Blast2Go> getListaBlast() {
+//		return listaBlast;
+//	}
+//
+//	public void setListaBlast(List<Blast2Go> listaBlast) {
+//		this.listaBlast = listaBlast;
+//	}
 	
 	
 	
@@ -83,9 +87,32 @@ public class Ccbh {
 	public void setListaCcbhBlast(List<CcbhBlast> listaCcbhBlast) {
 		this.listaCcbhBlast = listaCcbhBlast;
 	}
+	
+	
+	
+	public List<CcbhInter> getListaCcbhInter() {
+		return listaCcbhInter;
+	}
+
+	public void setListaCcbhInter(List<CcbhInter> listaCcbhInter) {
+		this.listaCcbhInter = listaCcbhInter;
+	}
+	
+	
+
+	public List<CcbhEnzyme> getListaCcbhEnzyme() {
+		return listaCcbhEnzyme;
+	}
+
+	public void setListaCcbhEnzyme(List<CcbhEnzyme> listaCcbhEnzyme) {
+		this.listaCcbhEnzyme = listaCcbhEnzyme;
+	}
 
 	@Override
 	public String toString() {
-		return "\nCCBH ID: " + this.id;
+		return "\nCCBH ID: " + this.id + 
+				" LISTA BLAST: " + this.listaCcbhBlast +
+				" LISTA INTER: " + this.listaCcbhInter +
+				" LISTA ENZYME: " + this.listaCcbhEnzyme;
 	}
 }

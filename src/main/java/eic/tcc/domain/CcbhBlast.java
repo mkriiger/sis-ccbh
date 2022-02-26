@@ -52,7 +52,9 @@ public class CcbhBlast implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "\nNOME BLAST: " + this.blast.getName() + "\nEVALUE: " + this.eValue + "\nHITS: " + this.hits;
+		return "\nID BLAST: " + this.blast.getId() + " NOME BLAST: " + 
+				this.blast.getName() + "\nEVALUE: " + 
+				this.eValue + "\nHITS: " + this.hits;
 	}
 	
 	

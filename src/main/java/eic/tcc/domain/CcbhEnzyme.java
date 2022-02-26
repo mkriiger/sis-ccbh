@@ -30,4 +30,10 @@ public class CcbhEnzyme implements Serializable {
 	public Enzyme getEnzyme() {
 		return enzyme;
 	}
+	
+	@Override
+	public String toString() {
+		return "\nENZYME CODE: " + this.enzyme.getCode() + " NOME ENZYME: " + 
+				this.enzyme.getName();
+	}
 }

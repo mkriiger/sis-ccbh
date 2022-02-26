@@ -20,6 +20,12 @@ public class Enzyme {
 
 	@Transient
 	private List<Ccbh> listaCcbh;
+	
+	@Transient
+	private List<CcbhBlast> listaCcbhBlast;
+	
+	@Transient
+	private List<CcbhInter> listaCcbhInter;
 
 	public String getCode() {
 		return code;
@@ -35,5 +41,28 @@ public class Enzyme {
 
 	public List<Ccbh> getListaCcbh() {
 		return listaCcbh;
+	}
+	
+	
+	
+	public List<CcbhBlast> getListaCcbhBlast() {
+		return listaCcbhBlast;
+	}
+
+	public void setListaCcbhBlast(List<CcbhBlast> listaCcbhBlast) {
+		this.listaCcbhBlast = listaCcbhBlast;
+	}
+
+	public List<CcbhInter> getListaCcbhInter() {
+		return listaCcbhInter;
+	}
+
+	public void setListaCcbhInter(List<CcbhInter> listaCcbhInter) {
+		this.listaCcbhInter = listaCcbhInter;
+	}
+
+	@Override
+	public String toString() {
+		return "\nENZIME CODE: " + this.code + " LISTA CCBH: " + this.listaCcbh;
 	}
 }

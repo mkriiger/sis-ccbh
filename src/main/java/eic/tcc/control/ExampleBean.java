@@ -9,9 +9,13 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import eic.tcc.dao.Dao;
+import eic.tcc.domain.Blast2Go;
 import eic.tcc.domain.Ccbh;
 import eic.tcc.domain.CcbhBlast;
+import eic.tcc.domain.CcbhEnzyme;
+import eic.tcc.domain.CcbhInter;
 import eic.tcc.domain.Enzyme;
+import eic.tcc.domain.InterPro;
 import eic.tcc.domain.enums.Categoria;
 
 @Controller(value = "exampleBean")
@@ -32,7 +36,7 @@ public class ExampleBean extends _Bean {
 	//
 	// apagar toda esta query de testes
 	//
-	public void query() {
+	public void buscarPorNomeEnzima() {
 
 		this.verificarNulo();
 
@@ -47,18 +51,45 @@ public class ExampleBean extends _Bean {
 			//Enzyme e = dao.retrieveById(Enzyme.class, "EC:1.1.1.1");
 			
 			// OK
-			e.setListaCcbh((List<Ccbh>) dao.queryHQL("SELECT ce.ccbh FROM CcbhEnzyme ce WHERE ce.enzyme.code like '" + e.getCode() + "'"));
+			e.setListaCcbh((List<Ccbh>) dao.queryHQL("SELECT ce.ccbh FROM CcbhEnzyme ce WHERE ce.enzyme.code = '" + e.getCode() + "'"));
 		
 			// OK
 			for (Ccbh c : e.getListaCcbh()) {
 				//c.setListaBlast((List<Blast2Go>) dao.queryHQL("SELECT cb.blast FROM CcbhBlast cb WHERE cb.ccbh.id like '" + c.getId() + "'"));
 			
-				c.setListaCcbhBlast((List<CcbhBlast>) dao.queryHQL("SELECT cb FROM CcbhBlast cb WHERE cb.ccbh.id like '" + c.getId() + "'"));
-			
-				System.out.println(c.getId());
-				System.out.println(c.getListaCcbhBlast());
+				c.setListaCcbhBlast((List<CcbhBlast>) dao.queryHQL("SELECT cb FROM CcbhBlast cb WHERE cb.ccbh.id = '" + c.getId() + "'"));
+				c.setListaCcbhInter((List<CcbhInter>) dao.queryHQL("SELECT cb FROM CcbhInter cb WHERE cb.ccbh.id = '" + c.getId() + "'"));
+				//System.out.println(c.getId());				
 			}
 		}
+		System.out.println(listaEnzimas);
+	}
+	
+	public void buscarPorNomeGo() {
+		
+		List<Blast2Go> listaBlast = (List<Blast2Go>) dao.queryHQL("SELECT e FROM Blast2Go e WHERE e.name LIKE '%" + this.nomeGo + "%'");
+		List<InterPro> listaInter = (List<InterPro>) dao.queryHQL("SELECT e FROM InterPro e WHERE e.name LIKE '%" + this.nomeGo + "%'");
+		
+		for(Blast2Go b : listaBlast) {
+			
+			b.setListaCcbh((List<Ccbh>) dao.queryHQL("SELECT ce.ccbh FROM CcbhBlast ce WHERE ce.blast.id = '" + b.getId() + "'"));
+			
+			for (Ccbh c : b.getListaCcbh()) {
+				
+				c.setListaCcbhEnzyme((List<CcbhEnzyme>) dao.queryHQL("SELECT cb FROM CcbhEnzyme cb WHERE cb.ccbh.id = '" + c.getId() + "'"));
+			}
+		}
+		
+		for(InterPro i : listaInter) {
+			
+			i.setListaCcbh((List<Ccbh>) dao.queryHQL("SELECT ce.ccbh FROM CcbhInter ce WHERE ce.inter.id = '" + i.getId() + "'"));
+			
+			for (Ccbh cc : i.getListaCcbh()) {
+				cc.setListaCcbhEnzyme((List<CcbhEnzyme>) dao.queryHQL("SELECT cb FROM CcbhEnzyme cb WHERE cb.ccbh.id = '" + cc.getId() + "'"));
+			}
+		}
+		System.out.println(listaBlast);
+		System.out.println(listaInter);
 	}
 
 	private List<?> buscarPorNomeGoBlast() {

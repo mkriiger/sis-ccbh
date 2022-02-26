@@ -30,4 +30,10 @@ public class CcbhInter implements Serializable {
 	public InterPro getInter() {
 		return inter;
 	}
+	
+	@Override
+	public String toString() {
+		return "\nID INTER: " + this.inter.getId() + " NOME INTER: " + 
+				this.inter.getName();
+	}
 }
