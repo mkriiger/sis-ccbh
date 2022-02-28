@@ -19,19 +19,126 @@
 
 	<h:form>
 	
-		<h:panelGrid columns="2">
-		  
-			<h:outputLabel value="testar query no bd (Nome da Go):"/>
-			<h:inputText value="#{exampleBean.nomeGo}"/>
+		<p:panel header="CCBH4851 DataBase">
+		<p:scrollTop />
+			<div class="card">
+				<p:fieldset>
+					<legend>Parâmetros de Pesquisa</legend>
+					
+						<div>
+							<h4>Busca por Enzima</h4>
+							<p:inputText placeholder="Nome da Enzima" value="#{exampleBean.nomeEnzima}"/>
+						</div>
+						<div>
+							<div>
+								<h4>Busca por Gene Ontology</h4>
+							
+								<p:selectOneMenu id="option">
+									<f:selectItem itemLabel="Todas as categorias" itemValue="" />
+									<f:selectItem itemLabel="F - Função Molecular" itemValue="F:" />
+									<f:selectItem itemLabel="P - Processo Biológico" itemValue="P:" />
+									<f:selectItem itemLabel="C - Componente Celular" itemValue="C:" />
+								</p:selectOneMenu>
+							</div>
+							<br/>
+							<p:inputText placeholder="Nome da GO" />
+						</div>
+						<br/>
+					 <p:commandButton value="submit" action="#{exampleBean.buscarPorNomeEnzima}"/>
+				</p:fieldset>
+	
+			</div>
+			<br/>
 			
-			<h:outputLabel value="testar query no bd (Nome da Enzima):"/>
-			<h:inputText value="#{exampleBean.nomeEnzima}"/>
-		   
-		</h:panelGrid>
+				<div class="card">
+					<p:dataTable var="row" value="#{exampleBean.rows}"
+						stripedRows="true" reflow="true" rows="5" paginator="true" showGridlines="true"
+						paginatorPosition="bottom"
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
+						rowsPerPageTemplate="5,10,{ShowAll|'Todos'}" stickyHeader="true"
+						stickyTopAt=".layout-topbar">
+						<f:facet name="header">
+				            Resultado da Busca
+				        </f:facet>
+						<p:column headerText="ID" style="width:5%">
+							<h:outputText value="#{row.ccbh.id}" />
+						</p:column>
 		
-		<h:commandButton value="testar busca por Go" action="#{exampleBean.buscarPorNomeGo}"/>
+						<p:column headerText="Seq Name" style="width:10%">
+							<h:outputText value="#{row.ccbh.seqName}" />
+						</p:column>
 		
-		<h:commandButton value="testar busca por Enzima" action="#{exampleBean.buscarPorNomeEnzima}"/>
+						<p:column headerText="Description" style="width:10%">
+							<h:outputText value="#{row.ccbh.description}" />
+						</p:column>
+						
+						<p:column headerText="Length" style="width:5%">
+							<h:outputText value="#{row.ccbh.length}" />
+						</p:column>
+						
+						<p:column headerText="Evalue" style="width:5%">
+							<h:outputText value="#{row.eValue}" />
+						</p:column>
+						
+						<p:column headerText="Hits" style="width:5%">
+							<h:outputText value="#{row.hits}" />
+						</p:column>
+						
+						<p:column headerText="Enzyme terms" style="width:20%">
+							<p:dataTable var="enzyme" value="#{row.enzymes}" size="small">
+								<p:column headerText="Code" style="width:30%">
+									<h:outputText value="#{enzyme.code}" />
+								</p:column>
+								<p:column headerText="Name" style="width:70%">
+									<h:outputText value="#{enzyme.name}" />
+								</p:column>
+							</p:dataTable>
+						</p:column>
+						
+						<p:column headerText="Blast GO terms" style="width:30%">
+							<p:dataTable var="blast" value="#{row.blastGos}" size="small">
+								<p:column headerText="Category" style="width:10%" >
+									<p:badge id="category" value="#{blast.categoria.category}" severity="#{blast.categoria.cor}" styleClass="p-mr-2"/>								
+									<p:tooltip for="category" value="#{blast.categoria.descricao}" my="left center" at="right center"/>
+								</p:column>
+								<p:column headerText="ID" style="width:30%">
+									<p:link href="#{exampleBean.getQuickGo(blast.id)}"
+										target="_blank" value="#{blast.id}">
+									</p:link>
+								</p:column>
+								<p:column headerText="Name" style="width:70%">
+									<h:outputText value="#{blast.name}" />
+								</p:column>
+							</p:dataTable>
+						</p:column>
+						
+						<p:column headerText="Interpro GO terms" style="width:30%">
+							<p:dataTable var="inter" value="#{row.interPros}" size="small">
+								<p:column headerText="Category" style="width:10%" >
+									<p:badge id="category" value="#{inter.categoria.category}" severity="#{inter.categoria.cor}" styleClass="p-mr-2"/>								
+									<p:tooltip for="category" value="#{inter.categoria.descricao}" my="left center" at="right center"/>
+								</p:column>
+								<p:column headerText="ID" style="width:30%">
+									<p:link href="#{exampleBean.getQuickGo(inter.id)}"
+										target="_blank" value="#{inter.id}">
+									</p:link>
+								</p:column>
+								<p:column headerText="Name" style="width:70%">
+									<h:outputText value="#{inter.name}" />
+								</p:column>
+							</p:dataTable>
+						</p:column>					
+							
+						<f:facet name="footer">
+							<span class="p-text-bold">Total de registros:
+								#{exampleBean.rows.size()} </span>
+						</f:facet>					
+					</p:dataTable>
+				</div>
+			
+			<p:scrollTop target="parent" threshold="100" styleClass="custom-scrolltop" icon="pi pi-arrow-up" />			
+		</p:panel>
 	
 	</h:form> 
 		  

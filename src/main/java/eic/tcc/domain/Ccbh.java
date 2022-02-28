@@ -1,6 +1,7 @@
 package eic.tcc.domain;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,11 +26,6 @@ public class Ccbh {
 	@Column
 	private Integer length;
 	
-	
-// TROCADA PELA LISTA DE BAIXO	
-//	@Transient
-//	private List<Blast2Go> listaBlast;
-	
 	@Transient
 	private List<CcbhBlast> listaCcbhBlast;
 	
@@ -44,7 +40,7 @@ public class Ccbh {
 	}
 
 	public String getSeqName() {
-		return seqName;
+		return seqName.substring(14).replaceAll("[|]","");
 	}
 
 	public String getDescription() {
@@ -54,31 +50,6 @@ public class Ccbh {
 	public Integer getLength() {
 		return length;
 	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-//	public List<Blast2Go> getListaBlast() {
-//		return listaBlast;
-//	}
-//
-//	public void setListaBlast(List<Blast2Go> listaBlast) {
-//		this.listaBlast = listaBlast;
-//	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	public List<CcbhBlast> getListaCcbhBlast() {
 		return listaCcbhBlast;
@@ -109,10 +80,22 @@ public class Ccbh {
 	}
 
 	@Override
-	public String toString() {
-		return "\nCCBH ID: " + this.id + 
-				" LISTA BLAST: " + this.listaCcbhBlast +
-				" LISTA INTER: " + this.listaCcbhInter +
-				" LISTA ENZYME: " + this.listaCcbhEnzyme;
+	public int hashCode() {
+		return Objects.hash(id);
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Ccbh other = (Ccbh) obj;
+		return Objects.equals(id, other.id);
+	}
+	
+	
+
 }

@@ -18,6 +18,15 @@ public class Enzyme {
 	@Column(name = "enzyme_name")
 	private String name;
 
+	public Enzyme(String code, String name) {
+		this.code = code;
+		this.name = name;
+	}
+	
+	public Enzyme() {
+		
+	}
+
 	@Transient
 	private List<Ccbh> listaCcbh;
 	
@@ -61,8 +70,5 @@ public class Enzyme {
 		this.listaCcbhInter = listaCcbhInter;
 	}
 
-	@Override
-	public String toString() {
-		return "\nENZIME CODE: " + this.code + " LISTA CCBH: " + this.listaCcbh;
-	}
+	
 }

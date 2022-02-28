@@ -1,5 +1,6 @@
 package eic.tcc.control;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.event.ValueChangeEvent;
@@ -17,6 +18,8 @@ import eic.tcc.domain.CcbhInter;
 import eic.tcc.domain.Enzyme;
 import eic.tcc.domain.InterPro;
 import eic.tcc.domain.enums.Categoria;
+import eic.tcc.domain.vo.ResultRow;
+import eic.tcc.domain.vo.SearchResult;
 
 @Controller(value = "exampleBean")
 @Scope("session")
@@ -28,41 +31,37 @@ public class ExampleBean extends _Bean {
 	//
 	// Attributes
 	//
-	private String hello = "HELLO WORLD!";
 	private String nomeGo;
 	private String nomeEnzima;
 	private String categoriaSelecionada;
+	
+	@SuppressWarnings("unused")
+	private String quickGo;
+	
+	private SearchResult result;
+	private List<Ccbh> listAux = new ArrayList<>();
+	private List<ResultRow> rows = new ArrayList<>();
 
-	//
-	// apagar toda esta query de testes
-	//
 	public void buscarPorNomeEnzima() {
 
-		this.verificarNulo();
-
-		//
-		// query teste busca por nome enzima
-		//
 		List<Enzyme> listaEnzimas = (List<Enzyme>) dao.queryHQL("SELECT e FROM Enzyme e WHERE e.name LIKE '%" + this.nomeEnzima + "%'");
 		
 		for (Enzyme e : listaEnzimas) {
 		
-			// OK
-			//Enzyme e = dao.retrieveById(Enzyme.class, "EC:1.1.1.1");
-			
-			// OK
 			e.setListaCcbh((List<Ccbh>) dao.queryHQL("SELECT ce.ccbh FROM CcbhEnzyme ce WHERE ce.enzyme.code = '" + e.getCode() + "'"));
 		
-			// OK
 			for (Ccbh c : e.getListaCcbh()) {
-				//c.setListaBlast((List<Blast2Go>) dao.queryHQL("SELECT cb.blast FROM CcbhBlast cb WHERE cb.ccbh.id like '" + c.getId() + "'"));
-			
-				c.setListaCcbhBlast((List<CcbhBlast>) dao.queryHQL("SELECT cb FROM CcbhBlast cb WHERE cb.ccbh.id = '" + c.getId() + "'"));
-				c.setListaCcbhInter((List<CcbhInter>) dao.queryHQL("SELECT cb FROM CcbhInter cb WHERE cb.ccbh.id = '" + c.getId() + "'"));
-				//System.out.println(c.getId());				
+				if(!listAux.contains(c)) {
+					c.setListaCcbhEnzyme((List<CcbhEnzyme>) dao.queryHQL("SELECT cb FROM CcbhEnzyme cb WHERE cb.ccbh.id = '" + c.getId() +
+							"' AND cb.enzyme.name LIKE '%" + this.nomeEnzima + "%'"));
+					c.setListaCcbhBlast((List<CcbhBlast>) dao.queryHQL("SELECT cb FROM CcbhBlast cb WHERE cb.ccbh.id = '" + c.getId() + "'"));
+					c.setListaCcbhInter((List<CcbhInter>) dao.queryHQL("SELECT cb FROM CcbhInter cb WHERE cb.ccbh.id = '" + c.getId() + "'"));
+					listAux.add(c);
+				}				
 			}
 		}
-		System.out.println(listaEnzimas);
+		result = new SearchResult(listAux);
+		rows.addAll(result.getRowList());
 	}
 	
 	public void buscarPorNomeGo() {
@@ -88,39 +87,12 @@ public class ExampleBean extends _Bean {
 				cc.setListaCcbhEnzyme((List<CcbhEnzyme>) dao.queryHQL("SELECT cb FROM CcbhEnzyme cb WHERE cb.ccbh.id = '" + cc.getId() + "'"));
 			}
 		}
-		System.out.println(listaBlast);
-		System.out.println(listaInter);
+
 	}
 
-	private List<?> buscarPorNomeGoBlast() {
-
-		this.verificarNulo();
-		return dao.queryHQL("SELECT e FROM CcbhBlast e WHERE e.blast.name LIKE '" + this.categoriaSelecionada + "%"
-				+ this.nomeGo + "%'");
-	}
-
-	private List<?> buscarPorNomeGoInter() {
-
-		this.verificarNulo();
-		return dao.queryHQL("SELECT e FROM CcbhInter e WHERE e.inter.name LIKE '" + this.categoriaSelecionada + "%"
-				+ this.nomeGo + "%'");
-	}
-
-	private List<?> buscarPorNomeEnzyme() {
-		return dao.queryHQL("SELECT e FROM CcbhEnzyme e WHERE e.enzyme.name LIKE '%" + this.nomeEnzima + "%'");
-	}
-
-	private void verificarNulo() {
-		if (categoriaSelecionada == null)
-			categoriaSelecionada = "";
-	}
 
 	public void selecionarCategoria(ValueChangeEvent event) {
 		categoriaSelecionada = (String) event.getNewValue();
-	}
-
-	public String getHello() {
-		return hello;
 	}
 
 	public String getNomeGo() {
@@ -142,4 +114,32 @@ public class ExampleBean extends _Bean {
 	public Categoria[] getCategorias() {
 		return Categoria.values();
 	}
+
+	public SearchResult getResult() {
+		return result;
+	}
+
+	public void setResult(SearchResult result) {
+		this.result = result;
+	}
+
+	public List<Ccbh> getListAux() {
+		return listAux;
+	}
+
+	public List<ResultRow> getRows() {
+		return rows;
+	}
+
+	//REFERENCIA CRUZADA
+	public String getQuickGo(String goId) {
+		return "https://www.ebi.ac.uk/QuickGO/term/" + goId;
+	}
+
+	public void setQuickGo(String quickGo) {
+		this.quickGo = quickGo;
+	}
+
+
+	
 }
