@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:f="http://java.sun.com/jsf/core"
+				xmlns:ui="http://java.sun.com/jsf/facelets"
+				xmlns:p="http://primefaces.org/ui" 
+				xmlns:pe="http://primefaces.org/ui/extensions"
+				template="_template.xhtml">
+
+<f:event listener="#{menuBean.preRender()}" type="preRenderView" />
+
+<f:metadata>
+	<f:event type="preRenderView" listener="#{menuBean.preRender()}" />	
+</f:metadata>
+
+
+<ui:define name="content">			  
+	
+	<h:form id="formSearch">		
+        
+		<p:panel header="Sobre">
+			<div class="card">				
+				Este website refere-se ao Trabalho de Conclusão de Curso 
+				de Marcio Augusto Von Kriiger Santos e Rafael Santos da Silva, alunos de graduação do CEFET-RJ em Sistemas para Internet, 
+				sob orientação dos professores Kele Teixeira Belloze e Rafael Castaneda Ribeiro.
+				O objetivo é disponibilizar uma interface amigável para a consulta de dados inéditos referentes a bactéria 
+				Pseudomonas aeruginosa CCBH4851, gerados por meio da tese de mestrado de Ribamar Santos Ferreira Matias em 2020.				
+			</div>
+		</p:panel>
+	
+	</h:form> 
+		  
+		            
+</ui:define>
+
+
+</ui:composition>

@@ -3,6 +3,8 @@ package eic.tcc.control;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +44,38 @@ public class ExampleBean extends _Bean {
 	private List<Ccbh> listAux = new ArrayList<>();
 	private List<ResultRow> rows = new ArrayList<>();
 
-	public void buscarPorNomeEnzima() {
-
+	public void pesquisar() {
+		rows.clear();
+		listAux.clear();
+		if((!this.nomeEnzima.equals("")) && (this.nomeGo.equals(""))) {
+			buscarPorNomeEnzima();
+			if(rows.size() == 0) {
+				retornaAviso();
+			}
+		} else if((this.nomeEnzima.equals("")) && (!this.nomeGo.equals(""))){
+			buscarPorNomeGo();
+			if(rows.size() == 0) {
+				retornaAviso();
+			}
+		} else {
+			retornaErro();
+		}
+	}
+	
+	public void retornaErro() {
+		FacesContext.getCurrentInstance().addMessage
+		(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+				"Erro:", "Ao menos um critério de busca deve ser preenchido"));
+	}
+	
+	public void retornaAviso() {
+		FacesContext.getCurrentInstance().addMessage
+		(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+				"Aviso:", "Nenhum registro encontrado"));
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void buscarPorNomeEnzima() {		
 		List<Enzyme> listaEnzimas = (List<Enzyme>) dao.queryHQL("SELECT e FROM Enzyme e WHERE e.name LIKE '%" + this.nomeEnzima + "%'");
 		
 		for (Enzyme e : listaEnzimas) {
@@ -64,6 +96,7 @@ public class ExampleBean extends _Bean {
 		rows.addAll(result.getRowList());
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void buscarPorNomeGo() {
 		
 		List<Blast2Go> listaBlast = (List<Blast2Go>) dao.queryHQL("SELECT e FROM Blast2Go e WHERE e.name LIKE '%" + this.nomeGo + "%'");

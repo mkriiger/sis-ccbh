@@ -15,14 +15,27 @@
 
 
 <ui:define name="content">
-		  
-
-	<h:form id="formSearch">
 	
+	<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
+
+    <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+        <div class="p-text-center">
+            <i class="pi pi-spin pi-spinner loading-icon" aria-hidden="true"></i>
+        </div>
+    </p:dialog>
+		  
+	
+	<h:form id="formSearch">		
+        
 		<p:panel header="CCBH4851 DataBase">
 		<p:scrollTop />
 			<div class="card">
 				<p:fieldset>
+				
+				<p:messages id="messages" showDetail="true" closable="true">
+            		<p:autoUpdate/>
+        		</p:messages>
+				
 					<legend>Parâmetros de Pesquisa</legend>
 					
 						<div>
@@ -36,22 +49,22 @@
 								<p:selectOneMenu id="option" valueChangeListener="#{exampleBean.selecionarCategoria}">
 									<p:ajax update="@this"/>
 									<f:selectItem itemLabel="Todas as categorias"/>
-									<f:selectItems value="#{exampleBean.categorias}" var="categoria" itemLabel="#{categoria.descricao}"/>
+									<f:selectItems value="#{exampleBean.categorias}" var="categoria" itemLabel="#{categoria.category} - #{categoria.descricao}"/>
 								</p:selectOneMenu>
 							</div>
 							<br/>
 							<p:inputText placeholder="Nome da GO" value="#{exampleBean.nomeGo}"/>
 						</div>
 						<br/>
-					 <p:commandButton value="submit" action="#{exampleBean.buscarPorNomeGo}" update="formSearch"/>
+					 <p:commandButton value="Pesquisar" action="#{exampleBean.pesquisar}" update="formSearch"/>
 				</p:fieldset>
 	
 			</div>
 			<br/>
-			
+			<h:panelGroup rendered="#{not empty exampleBean.rows}">
 				<div class="card">
 					<p:dataTable var="row" value="#{exampleBean.rows}"
-						stripedRows="true" reflow="true" rows="5" paginator="true" showGridlines="true"
+						stripedRows="true" rows="5" paginator="true" showGridlines="true"
 						paginatorPosition="bottom"
 						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 						currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
@@ -60,31 +73,20 @@
 						<f:facet name="header">
 				            Resultado da Busca
 				        </f:facet>
-						<p:column headerText="ID" style="width:5%">
-							<h:outputText value="#{row.ccbh.id}" />
-						</p:column>
-		
-						<p:column headerText="Seq Name" style="width:10%">
-							<h:outputText value="#{row.ccbh.seqName}" />
-						</p:column>
-		
-						<p:column headerText="Description" style="width:10%">
-							<h:outputText value="#{row.ccbh.description}" />
-						</p:column>
+						<p:column headerText="CCBH terms" style="width:15%">
+							<div class="card">
+								<p:panelGrid columns="1">
+									<h:outputText value="ID: #{row.ccbh.id}" />
+									<h:outputText value="Seq Name: #{row.ccbh.seqName}" style="word-wrap: break-word;"/>
+									<h:outputText value="Description: #{row.ccbh.description}" style="word-wrap: break-word;"/>
+									<h:outputText value="Length: #{row.ccbh.length}"/>
+									<h:outputText value="eValue: #{row.eValue}"/>
+									<h:outputText value="Hits: #{row.hits}"/>
+								</p:panelGrid>
+							</div>
+						</p:column>						
 						
-						<p:column headerText="Length" style="width:5%">
-							<h:outputText value="#{row.ccbh.length}" />
-						</p:column>
-						
-						<p:column headerText="Evalue" style="width:5%">
-							<h:outputText value="#{row.eValue}" />
-						</p:column>
-						
-						<p:column headerText="Hits" style="width:5%">
-							<h:outputText value="#{row.hits}" />
-						</p:column>
-						
-						<p:column headerText="Enzyme terms" style="width:20%">
+						<p:column headerText="Enzyme terms" style="width:25%" responsivePriority="2">
 							<p:dataTable var="enzyme" value="#{row.enzymes}" size="small">
 								<p:column headerText="Code" style="width:30%">
 									<h:outputText value="#{enzyme.code}" />
@@ -95,35 +97,35 @@
 							</p:dataTable>
 						</p:column>
 						
-						<p:column headerText="Blast GO terms" style="width:30%">
+						<p:column headerText="Blast2GO GO terms" style="width:30%" responsivePriority="3">
 							<p:dataTable var="blast" value="#{row.blastGos}" size="small">
-								<p:column headerText="Category" style="width:10%" >
+								<p:column headerText="Category" style="width:20%" >
 									<p:badge id="category" value="#{blast.categoria.category}" severity="#{blast.categoria.cor}" styleClass="p-mr-2"/>								
 									<p:tooltip for="category" value="#{blast.categoria.descricao}" my="left center" at="right center"/>
 								</p:column>
-								<p:column headerText="ID" style="width:30%">
+								<p:column headerText="ID" style="width:25%">
 									<p:link href="#{exampleBean.getQuickGo(blast.id)}"
 										target="_blank" value="#{blast.id}">
 									</p:link>
 								</p:column>
-								<p:column headerText="Name" style="width:70%">
+								<p:column headerText="Name" style="width:55%">
 									<h:outputText value="#{blast.name}" />
 								</p:column>
 							</p:dataTable>
 						</p:column>
 						
-						<p:column headerText="Interpro GO terms" style="width:30%">
+						<p:column headerText="InterProScan GO terms" style="width:30%" responsivePriority="4">
 							<p:dataTable var="inter" value="#{row.interPros}" size="small">
-								<p:column headerText="Category" style="width:10%" >
+								<p:column headerText="Category" style="width:20%" >
 									<p:badge id="category" value="#{inter.categoria.category}" severity="#{inter.categoria.cor}" styleClass="p-mr-2"/>								
 									<p:tooltip for="category" value="#{inter.categoria.descricao}" my="left center" at="right center"/>
 								</p:column>
-								<p:column headerText="ID" style="width:30%">
+								<p:column headerText="ID" style="width:25%">
 									<p:link href="#{exampleBean.getQuickGo(inter.id)}"
 										target="_blank" value="#{inter.id}">
 									</p:link>
 								</p:column>
-								<p:column headerText="Name" style="width:70%">
+								<p:column headerText="Name" style="width:55%">
 									<h:outputText value="#{inter.name}" />
 								</p:column>
 							</p:dataTable>
@@ -135,7 +137,7 @@
 						</f:facet>					
 					</p:dataTable>
 				</div>
-			
+			</h:panelGroup>
 			<p:scrollTop target="parent" threshold="100" styleClass="custom-scrolltop" icon="pi pi-arrow-up" />			
 		</p:panel>
 	

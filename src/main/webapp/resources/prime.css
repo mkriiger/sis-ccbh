@@ -42,3 +42,7 @@ body .ui-treetable tbody tr td
 .noheader.ui-datatable table thead {
     display: none;
 }
+
+.ui-datatable .ui-datatable-data td {
+    vertical-align : top
+}
