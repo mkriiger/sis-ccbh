@@ -17,7 +17,7 @@
 <ui:define name="content">
 		  
 
-	<h:form>
+	<h:form id="formSearch">
 	
 		<p:panel header="CCBH4851 DataBase">
 		<p:scrollTop />
@@ -44,7 +44,7 @@
 							<p:inputText placeholder="Nome da GO" />
 						</div>
 						<br/>
-					 <p:commandButton value="submit" action="#{exampleBean.buscarPorNomeEnzima}"/>
+					 <p:commandButton value="submit" action="#{exampleBean.buscarPorNomeEnzima}" update="formSearch"/>
 				</p:fieldset>
 	
 			</div>
