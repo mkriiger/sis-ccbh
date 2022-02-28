@@ -94,6 +94,11 @@ public class ExampleBean extends _Bean {
 	public void selecionarCategoria(ValueChangeEvent event) {
 		categoriaSelecionada = (String) event.getNewValue();
 	}
+	
+	private void verificarNulo() {
+		if (categoriaSelecionada == null)
+			categoriaSelecionada = "";
+	}
 
 	public String getNomeGo() {
 		return nomeGo;

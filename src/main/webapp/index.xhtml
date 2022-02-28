@@ -33,18 +33,17 @@
 							<div>
 								<h4>Busca por Gene Ontology</h4>
 							
-								<p:selectOneMenu id="option">
-									<f:selectItem itemLabel="Todas as categorias" itemValue="" />
-									<f:selectItem itemLabel="F - Função Molecular" itemValue="F:" />
-									<f:selectItem itemLabel="P - Processo Biológico" itemValue="P:" />
-									<f:selectItem itemLabel="C - Componente Celular" itemValue="C:" />
+								<p:selectOneMenu id="option" valueChangeListener="#{exampleBean.selecionarCategoria}">
+									<p:ajax update="@this"/>
+									<f:selectItem itemLabel="Todas as categorias"/>
+									<f:selectItems value="#{exampleBean.categorias}" var="categoria" itemLabel="#{categoria.descricao}"/>
 								</p:selectOneMenu>
 							</div>
 							<br/>
-							<p:inputText placeholder="Nome da GO" />
+							<p:inputText placeholder="Nome da GO" value="#{exampleBean.nomeGo}"/>
 						</div>
 						<br/>
-					 <p:commandButton value="submit" action="#{exampleBean.buscarPorNomeEnzima}" update="formSearch"/>
+					 <p:commandButton value="submit" action="#{exampleBean.buscarPorNomeGo}" update="formSearch"/>
 				</p:fieldset>
 	
 			</div>
