@@ -64,8 +64,7 @@
 			<h:panelGroup rendered="#{not empty exampleBean.rows}">
 				<div class="card">
 					<p:dataTable var="row" value="#{exampleBean.rows}"
-						stripedRows="true" rows="5" paginator="true" showGridlines="true"
-						paginatorPosition="bottom"
+						stripedRows="true" rows="5" paginator="true" showGridlines="true"						
 						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 						currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
 						rowsPerPageTemplate="5,10,{ShowAll|'Todos'}" stickyHeader="true"
@@ -99,16 +98,16 @@
 						
 						<p:column headerText="Blast2GO GO terms" style="width:30%" responsivePriority="3">
 							<p:dataTable var="blast" value="#{row.blastGos}" size="small">
-								<p:column headerText="Category" style="width:20%" >
+								<p:column id="right" headerText="Cat." style="width:10%" >
 									<p:badge id="category" value="#{blast.categoria.category}" severity="#{blast.categoria.cor}" styleClass="p-mr-2"/>								
 									<p:tooltip for="category" value="#{blast.categoria.descricao}" my="left center" at="right center"/>
 								</p:column>
-								<p:column headerText="ID" style="width:25%">
+								<p:column headerText="ID" style="width:30%">
 									<p:link href="#{exampleBean.getQuickGo(blast.id)}"
 										target="_blank" value="#{blast.id}">
 									</p:link>
 								</p:column>
-								<p:column headerText="Name" style="width:55%">
+								<p:column headerText="Name" style="width:60%">
 									<h:outputText value="#{blast.name}" />
 								</p:column>
 							</p:dataTable>
@@ -116,16 +115,16 @@
 						
 						<p:column headerText="InterProScan GO terms" style="width:30%" responsivePriority="4">
 							<p:dataTable var="inter" value="#{row.interPros}" size="small">
-								<p:column headerText="Category" style="width:20%" >
+								<p:column id="right" headerText="Cat." style="width:10%">
 									<p:badge id="category" value="#{inter.categoria.category}" severity="#{inter.categoria.cor}" styleClass="p-mr-2"/>								
 									<p:tooltip for="category" value="#{inter.categoria.descricao}" my="left center" at="right center"/>
 								</p:column>
-								<p:column headerText="ID" style="width:25%">
+								<p:column headerText="ID" style="width:30%">
 									<p:link href="#{exampleBean.getQuickGo(inter.id)}"
 										target="_blank" value="#{inter.id}">
 									</p:link>
 								</p:column>
-								<p:column headerText="Name" style="width:55%">
+								<p:column headerText="Name" style="width:60%">
 									<h:outputText value="#{inter.name}" />
 								</p:column>
 							</p:dataTable>
