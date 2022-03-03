@@ -79,7 +79,7 @@ public class ExampleBean extends _Bean {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void buscarPorNomeEnzima() {		
+	private void buscarPorNomeEnzima() {		
 		List<Enzyme> listaEnzimas = (List<Enzyme>) dao.queryHQL("SELECT e FROM Enzyme e WHERE e.name LIKE '%" + this.nomeEnzima + "%'");
 		
 		for (Enzyme e : listaEnzimas) {
