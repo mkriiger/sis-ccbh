@@ -45,24 +45,6 @@
 	<listener>
 		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
 	</listener>
-		
-	<filter>
-		<filter-name>wipeCacheFilter</filter-name>
-		<filter-class>eic.tcc.control.filters.WipeCacheFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>wipeCacheFilter</filter-name>
-		<url-pattern>*.jsf</url-pattern>
-	</filter-mapping>
-	
-	<filter>
-		<filter-name>hideXhtmlFilter</filter-name>
-		<filter-class>eic.tcc.control.filters.HideXhtmlFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>hideXhtmlFilter</filter-name>
-		<url-pattern>*.xhtml</url-pattern>
-	</filter-mapping>
 	
 	<filter>
 	    <filter-name>SetCharacterEncodingFilter</filter-name>
