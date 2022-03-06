@@ -29,13 +29,11 @@ public class ExampleBean extends _Bean {
 	@Autowired
 	private Dao dao;
 
-	//
-	// Attributes
-	//
 	private String nomeGo;
 	private String nomeEnzima;
 	private String categoriaSelecionada;
 	private String buscaProteinaInput;
+	private String pesquisaSelecionada;
 	private TipoBuscaProteina tipoBuscaProteina;
 	
 	@SuppressWarnings("unused")
@@ -49,14 +47,16 @@ public class ExampleBean extends _Bean {
 		rows.clear();
 		listAux.clear();
 		
-		if((!this.nomeEnzima.equals(""))) {
+		if(this.pesquisaSelecionada.equals("enzima")) {
 			buscarPorNomeEnzima();			
-		} else if((!this.nomeGo.equals(""))){
+		} else if(this.pesquisaSelecionada.equals("go")){
 			buscarPorNomeGo();			
-		} else if((!this.buscaProteinaInput.equals(""))){
+		} else if(this.pesquisaSelecionada.equals("proteina")){
 			buscarProteina();
-		} else {
+		} else if(this.pesquisaSelecionada.equals("tudo")){
 			buscarTudo();
+		} else {
+			retornaErro();
 		}
 	}
 	
@@ -64,6 +64,12 @@ public class ExampleBean extends _Bean {
 		FacesContext.getCurrentInstance().addMessage
 		(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
 				"Aviso:", "Nenhum registro encontrado"));
+	}
+	
+	public void retornaErro() {
+		FacesContext.getCurrentInstance().addMessage
+		(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+				"Erro:", "Favor escolher um tipo de pesquisa"));
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -159,20 +165,15 @@ public class ExampleBean extends _Bean {
 		}
 	}
 	
-	// método para usar no botão de pesquisar dados de todas as proteinas
 	@SuppressWarnings("unchecked")
 	public void buscarTudo() {
 		
-		// teste OK
 		List<Ccbh> allCcbhs = (List<Ccbh>) dao.queryHQL("SELECT c FROM Ccbh c");
 		
 		for (Ccbh c : allCcbhs) {
 			
-			// teste OK
 			c.setListaCcbhEnzyme((List<CcbhEnzyme>) dao.queryHQL("SELECT ce FROM CcbhEnzyme ce WHERE ce.ccbh.id = '" + c.getId() + "'"));
-			// teste OK
 			c.setListaCcbhBlast((List<CcbhBlast>) dao.queryHQL("SELECT cb FROM CcbhBlast cb WHERE cb.ccbh.id = '" + c.getId() + "'"));
-			// teste OK
 			c.setListaCcbhInter((List<CcbhInter>) dao.queryHQL("SELECT ci FROM CcbhInter ci WHERE ci.ccbh.id = '" + c.getId() + "'"));
 		}
 		rows.addAll(new SearchResult(allCcbhs).getRowList());
@@ -261,6 +262,14 @@ public class ExampleBean extends _Bean {
 
 	public void setTipoBuscaProteina(TipoBuscaProteina tipoBuscaProteina) {
 		this.tipoBuscaProteina = tipoBuscaProteina;
+	}
+
+	public String getPesquisaSelecionada() {
+		return pesquisaSelecionada;
+	}
+
+	public void setPesquisaSelecionada(String pesquisaSelecionada) {
+		this.pesquisaSelecionada = pesquisaSelecionada;
 	}
 
 	

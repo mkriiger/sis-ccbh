@@ -37,37 +37,56 @@
         		</p:messages>
 				
 					<legend>Parâmetros de Pesquisa</legend>
+					<br/><br/>
+						<div class="card">
+							<p:selectOneMenu id="optionPesquisa" value="#{exampleBean.pesquisaSelecionada}">
+								<p:ajax update=":formSearch"/>
+								<f:selectItem itemLabel="Selecione o tipo de busca" itemValue=""/>
+								<f:selectItem itemLabel="Todos os tipos" itemValue="tudo"/>
+								<f:selectItem itemLabel="Busca por Enzima" itemValue="enzima"/>
+								<f:selectItem itemLabel="Busca por Gene Ontology" itemValue="go"/>
+								<f:selectItem itemLabel="Busca por Proteína" itemValue="proteina"/>
+							</p:selectOneMenu>
+						</div>
 					
-						<div>
-							<h4>Busca por Enzima</h4>
-							<p:inputText placeholder="Nome da Enzima" value="#{exampleBean.nomeEnzima}"/>
-						</div>
-						<div>
-							<div>
-								<h4>Busca por Gene Ontology</h4>
-							
-								<p:selectOneMenu id="option" valueChangeListener="#{exampleBean.selecionarCategoria}">
-									<p:ajax update="@this"/>
-									<f:selectItem itemLabel="Todas as categorias"/>
-									<f:selectItems value="#{exampleBean.categorias}" var="categoria" itemLabel="#{categoria.category} - #{categoria.descricao}"/>
-								</p:selectOneMenu>
+						<h:panelGroup rendered="#{exampleBean.pesquisaSelecionada == 'enzima'}">
+							<div class="card">
+								<h4>Busca por Enzima</h4>
+								<p:inputText placeholder="Nome da Enzima" value="#{exampleBean.nomeEnzima}"
+								required="true" requiredMessage="O nome é obrigatório"/>
 							</div>
-							<br/>
-							<p:inputText placeholder="Nome da GO" value="#{exampleBean.nomeGo}"/>
-						</div>
-						<div>
-							<div>
-								<h4>Busca por Proteína</h4>
-							
-								<p:selectOneMenu id="optionProteina" valueChangeListener="#{exampleBean.selecionarTipoBuscaProteina}">
-									<p:ajax update="@this"/>
-									<f:selectItems value="#{exampleBean.buscasProteina}" var="tipo" itemLabel="#{tipo.descricao}"/>
-								</p:selectOneMenu>
+						</h:panelGroup>
+						<h:panelGroup rendered="#{exampleBean.pesquisaSelecionada == 'go'}">
+							<div class="card">
+								<div>
+									<h4>Busca por Gene Ontology</h4>
+								
+									<p:selectOneMenu id="optionGo" valueChangeListener="#{exampleBean.selecionarCategoria}">
+										<p:ajax update="@this"/>
+										<f:selectItem itemLabel="Todas as categorias"/>
+										<f:selectItems value="#{exampleBean.categorias}" var="categoria" itemLabel="#{categoria.category} - #{categoria.descricao}"/>
+									</p:selectOneMenu>
+								</div>
+								<br/>
+								<p:inputText placeholder="Nome da GO" value="#{exampleBean.nomeGo}"/>
 							</div>
-							<br/>
-							<p:inputText placeholder="" value="#{exampleBean.buscaProteinaInput}"/>
-						</div>
-						<br/>
+						</h:panelGroup>
+						<h:panelGroup rendered="#{exampleBean.pesquisaSelecionada == 'proteina'}">
+							<div class="card">
+								<div>
+									<h4>Busca por Proteína</h4>
+								
+									<p:selectOneMenu id="optionProteina" valueChangeListener="#{exampleBean.selecionarTipoBuscaProteina}">
+										<p:ajax update="@this"/>
+										<f:selectItems value="#{exampleBean.buscasProteina}" var="tipo" itemLabel="#{tipo.descricao}"/>
+									</p:selectOneMenu>
+								</div>
+								<br/>
+								<p:inputText placeholder="Termo da busca" value="#{exampleBean.buscaProteinaInput}"
+								required="true" requiredMessage="O termo de busca é obrigatório"/>
+							</div>
+						</h:panelGroup>
+						<br/><br/>
 					 <p:commandButton value="Pesquisar" action="#{exampleBean.pesquisar}" update="formSearch"/>
 				</p:fieldset>
 	
