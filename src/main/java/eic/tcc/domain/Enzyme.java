@@ -37,7 +37,7 @@ public class Enzyme {
 	private List<CcbhInter> listaCcbhInter;
 
 	public String getCode() {
-		return code;
+		return code.substring(3);
 	}
 
 	public String getName() {

@@ -55,6 +55,18 @@
 							<br/>
 							<p:inputText placeholder="Nome da GO" value="#{exampleBean.nomeGo}"/>
 						</div>
+						<div>
+							<div>
+								<h4>Busca por Proteína</h4>
+							
+								<p:selectOneMenu id="optionProteina" valueChangeListener="#{exampleBean.selecionarTipoBuscaProteina}">
+									<p:ajax update="@this"/>
+									<f:selectItems value="#{exampleBean.buscasProteina}" var="tipo" itemLabel="#{tipo.descricao}"/>
+								</p:selectOneMenu>
+							</div>
+							<br/>
+							<p:inputText placeholder="" value="#{exampleBean.buscaProteinaInput}"/>
+						</div>
 						<br/>
 					 <p:commandButton value="Pesquisar" action="#{exampleBean.pesquisar}" update="formSearch"/>
 				</p:fieldset>
@@ -88,7 +100,9 @@
 						<p:column headerText="Enzyme terms" style="width:25%" responsivePriority="2">
 							<p:dataTable var="enzyme" value="#{row.enzymes}" size="small">
 								<p:column headerText="Code" style="width:30%">
-									<h:outputText value="#{enzyme.code}" />
+									<p:link href="#{exampleBean.getBrenda(enzyme.code)}"
+										target="_blank" value="#{enzyme.code}">
+									</p:link>
 								</p:column>
 								<p:column headerText="Name" style="width:70%">
 									<h:outputText value="#{enzyme.name}" />

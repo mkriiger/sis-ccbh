@@ -18,6 +18,7 @@ import eic.tcc.domain.CcbhEnzyme;
 import eic.tcc.domain.CcbhInter;
 import eic.tcc.domain.Enzyme;
 import eic.tcc.domain.enums.Categoria;
+import eic.tcc.domain.enums.TipoBuscaProteina;
 import eic.tcc.domain.vo.ResultRow;
 import eic.tcc.domain.vo.SearchResult;
 
@@ -34,6 +35,8 @@ public class ExampleBean extends _Bean {
 	private String nomeGo;
 	private String nomeEnzima;
 	private String categoriaSelecionada;
+	private String buscaProteinaInput;
+	private TipoBuscaProteina tipoBuscaProteina;
 	
 	@SuppressWarnings("unused")
 	private String quickGo;
@@ -45,31 +48,16 @@ public class ExampleBean extends _Bean {
 	public void pesquisar() {
 		rows.clear();
 		listAux.clear();
-		if((!this.nomeEnzima.equals("")) && (this.nomeGo.equals(""))) {
-			buscarPorNomeEnzima();
-			if(rows.size() == 0) {
-				retornaAviso();
-			}
-		} else if((this.nomeEnzima.equals("")) && (!this.nomeGo.equals(""))){
-			buscarPorNomeGo();
-			if(rows.size() == 0) {
-				retornaAviso();
-			}
+		
+		if((!this.nomeEnzima.equals(""))) {
+			buscarPorNomeEnzima();			
+		} else if((!this.nomeGo.equals(""))){
+			buscarPorNomeGo();			
+		} else if((!this.buscaProteinaInput.equals(""))){
+			buscarProteina();
 		} else {
-			retornaErro();
+			buscarTudo();
 		}
-	}
-	
-	public void retornaErro() {
-		String message = "";
-		if((this.nomeEnzima.equals("")) && (this.nomeGo.equals(""))){
-			message = "Ao menos um critério de busca deve ser preenchido";
-		} else {
-			message = "Apenas um critério de busca deve ser preenchido";
-		}
-		FacesContext.getCurrentInstance().addMessage
-		(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-				"Erro:", message));
 	}
 	
 	public void retornaAviso() {
@@ -84,7 +72,7 @@ public class ExampleBean extends _Bean {
 		
 		for (Enzyme e : listaEnzimas) {
 		
-			e.setListaCcbh((List<Ccbh>) dao.queryHQL("SELECT ce.ccbh FROM CcbhEnzyme ce WHERE ce.enzyme.code = '" + e.getCode() + "'"));
+			e.setListaCcbh((List<Ccbh>) dao.queryHQL("SELECT ce.ccbh FROM CcbhEnzyme ce WHERE ce.enzyme.code LIKE '%" + e.getCode() + "%'"));
 		
 			for (Ccbh c : e.getListaCcbh()) {
 				if(!listAux.contains(c)) {
@@ -98,6 +86,10 @@ public class ExampleBean extends _Bean {
 		}
 		result = new SearchResult(listAux);
 		rows.addAll(result.getRowList());
+		
+		if(rows.size() == 0) {
+			retornaAviso();
+		}
 	}
 	
 	
@@ -128,8 +120,44 @@ public class ExampleBean extends _Bean {
 		}
 		
 		rows.addAll(new SearchResult(listAux).getRowList());
+		
+		if(rows.size() == 0) {
+			retornaAviso();
+		}
 	}
 
+	@SuppressWarnings("unchecked")
+	public void buscarProteina() {
+		
+		List<Ccbh> allCcbhs = new ArrayList<>();
+		
+		if(getTipoBuscaProteina().equals(TipoBuscaProteina.DESCRICAO)) {
+			allCcbhs.addAll((List<Ccbh>) dao.queryHQL("SELECT e FROM Ccbh e WHERE e.description LIKE '%" + this.buscaProteinaInput + "%'"));
+		} else {
+			allCcbhs.addAll((List<Ccbh>) dao.queryHQL("SELECT e FROM Ccbh e WHERE e.seqName LIKE '%" + this.buscaProteinaInput + "%'"));
+		}
+		
+		for (Ccbh c : allCcbhs) {
+			
+			if(!listAux.contains(c)) {
+				
+				c.setListaCcbhEnzyme((List<CcbhEnzyme>) dao.queryHQL("SELECT ce FROM CcbhEnzyme ce WHERE ce.ccbh.id = '" + c.getId() + "'"));
+				
+				c.setListaCcbhBlast((List<CcbhBlast>) dao.queryHQL("SELECT cb FROM CcbhBlast cb WHERE cb.ccbh.id = '" + c.getId() + "'"));
+				
+				c.setListaCcbhInter((List<CcbhInter>) dao.queryHQL("SELECT ci FROM CcbhInter ci WHERE ci.ccbh.id = '" + c.getId() + "'"));
+									
+				listAux.add(c);
+			}
+		
+		}
+		
+		rows.addAll(new SearchResult(listAux).getRowList());
+		
+		if(rows.size() == 0) {
+			retornaAviso();
+		}
+	}
 	
 	// método para usar no botão de pesquisar dados de todas as proteinas
 	@SuppressWarnings("unchecked")
@@ -155,6 +183,15 @@ public class ExampleBean extends _Bean {
 		categoriaSelecionada = (String) event.getNewValue();
 	}
 	
+	public void selecionarTipoBuscaProteina(ValueChangeEvent event) {
+		if(event.getNewValue().toString().equals(TipoBuscaProteina.DESCRICAO.toString())) {
+			setTipoBuscaProteina(TipoBuscaProteina.DESCRICAO);
+		} else {
+			setTipoBuscaProteina(TipoBuscaProteina.NOME);
+		}
+	}
+	
+	
 	private void verificarNulo() {
 		if (categoriaSelecionada == null)
 			categoriaSelecionada = "";
@@ -179,6 +216,10 @@ public class ExampleBean extends _Bean {
 	public Categoria[] getCategorias() {
 		return Categoria.values();
 	}
+	
+	public TipoBuscaProteina[] getBuscasProteina() {
+		return TipoBuscaProteina.values();
+	}
 
 	public SearchResult getResult() {
 		return result;
@@ -196,15 +237,31 @@ public class ExampleBean extends _Bean {
 		return rows;
 	}
 
-	//REFERENCIA CRUZADA
+	//REFERENCIA CRUZADA GO
 	public String getQuickGo(String goId) {
 		return "https://www.ebi.ac.uk/QuickGO/term/" + goId;
 	}
 
-	public void setQuickGo(String quickGo) {
-		this.quickGo = quickGo;
+	//REFERENCIA CRUZADA ENZIMA
+	public String getBrenda(String enzymeCode) {
+		return "https://www.brenda-enzymes.org/enzyme.php?ecno=" + enzymeCode;
 	}
 
+	public String getBuscaProteinaInput() {
+		return buscaProteinaInput;
+	}
+
+	public void setBuscaProteinaInput(String buscaProteinaInput) {
+		this.buscaProteinaInput = buscaProteinaInput;
+	}
+
+	public TipoBuscaProteina getTipoBuscaProteina() {
+		return tipoBuscaProteina;
+	}
+
+	public void setTipoBuscaProteina(TipoBuscaProteina tipoBuscaProteina) {
+		this.tipoBuscaProteina = tipoBuscaProteina;
+	}
 
 	
 }
