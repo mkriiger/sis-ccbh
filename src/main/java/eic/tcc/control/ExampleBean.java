@@ -43,37 +43,33 @@ public class ExampleBean extends _Bean {
 	private List<Ccbh> listAux = new ArrayList<>();
 	private List<ResultRow> rows = new ArrayList<>();
 
-	public void pesquisar() {
-		rows.clear();
-		listAux.clear();
-		
-		if(this.pesquisaSelecionada.equals("enzima")) {
-			buscarPorNomeEnzima();			
-		} else if(this.pesquisaSelecionada.equals("go")){
-			buscarPorNomeGo();			
-		} else if(this.pesquisaSelecionada.equals("proteina")){
-			buscarProteina();
-		} else if(this.pesquisaSelecionada.equals("tudo")){
-			buscarTudo();
-		} else {
-			retornaErro();
-		}
-	}
+//	public void pesquisar() {
+//		rows.clear();
+//		listAux.clear();
+//		
+//		if(this.pesquisaSelecionada.equals("enzima")) {
+//			buscarPorNomeEnzima();			
+//		} else if(this.pesquisaSelecionada.equals("go")){
+//			buscarPorNomeGo();			
+//		} else if(this.pesquisaSelecionada.equals("proteina")){
+//			buscarProteina();
+//		} else if(this.pesquisaSelecionada.equals("tudo")){
+//			buscarTudo();
+//		} else {
+//			retornaErro();
+//		}
+//	}
 	
 	public void retornaAviso() {
 		FacesContext.getCurrentInstance().addMessage
 		(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-				"Aviso:", "Nenhum registro encontrado"));
-	}
+				"Nenhum registro encontrado", "Nenhum registro encontrado"));
+	}	
 	
-	public void retornaErro() {
-		FacesContext.getCurrentInstance().addMessage
-		(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-				"Erro:", "Favor escolher um tipo de pesquisa"));
-	}
-	
-	@SuppressWarnings("unchecked")
-	private void buscarPorNomeEnzima() {		
+	@SuppressWarnings({ "unchecked", "unused" })
+	public void buscarPorNomeEnzima() {
+		rows.clear();
+		listAux.clear();
 		List<Enzyme> listaEnzimas = (List<Enzyme>) dao.queryHQL("SELECT e FROM Enzyme e WHERE e.name LIKE '%" + this.nomeEnzima + "%'");
 		
 		for (Enzyme e : listaEnzimas) {
@@ -99,9 +95,10 @@ public class ExampleBean extends _Bean {
 	}
 	
 	
-	@SuppressWarnings("unchecked")
-	private void buscarPorNomeGo() {
-		
+	@SuppressWarnings({ "unchecked", "unused" })
+	public void buscarPorNomeGo() {
+		rows.clear();
+		listAux.clear();
 		this.verificarNulo();
 		
 		List<Ccbh> allCcbhs = new ArrayList<>();
@@ -132,9 +129,10 @@ public class ExampleBean extends _Bean {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "unused" })
 	public void buscarProteina() {
-		
+		rows.clear();
+		listAux.clear();
 		List<Ccbh> allCcbhs = new ArrayList<>();
 		
 		if(getTipoBuscaProteina().equals(TipoBuscaProteina.DESCRICAO)) {
@@ -165,9 +163,10 @@ public class ExampleBean extends _Bean {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "unused" })
 	public void buscarTudo() {
-		
+		rows.clear();
+		listAux.clear();
 		List<Ccbh> allCcbhs = (List<Ccbh>) dao.queryHQL("SELECT c FROM Ccbh c");
 		
 		for (Ccbh c : allCcbhs) {

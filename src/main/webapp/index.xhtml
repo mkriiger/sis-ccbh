@@ -32,7 +32,7 @@
 			<div class="card">
 				<p:fieldset>
 				
-				<p:messages id="messages" showDetail="true" closable="true">
+				<p:messages id="messages" showDetail="false" closable="true">
             		<p:autoUpdate/>
         		</p:messages>
 				
@@ -41,11 +41,11 @@
 						<div class="card">
 							<p:selectOneMenu id="optionPesquisa" value="#{exampleBean.pesquisaSelecionada}">
 								<p:ajax update=":formSearch"/>
-								<f:selectItem itemLabel="Selecione o tipo de busca" itemValue=""/>
-								<f:selectItem itemLabel="Todos os tipos" itemValue="tudo"/>
+								<f:selectItem itemLabel="Selecione o tipo de busca" itemValue=""/>								
 								<f:selectItem itemLabel="Busca por Enzima" itemValue="enzima"/>
 								<f:selectItem itemLabel="Busca por Gene Ontology" itemValue="go"/>
 								<f:selectItem itemLabel="Busca por Proteína" itemValue="proteina"/>
+								<f:selectItem itemLabel="Todos os registros" itemValue="tudo"/>
 							</p:selectOneMenu>
 						</div>
 					
@@ -55,6 +55,8 @@
 								<p:inputText placeholder="Nome da Enzima" value="#{exampleBean.nomeEnzima}"
 								required="true" requiredMessage="O nome é obrigatório"/>
 							</div>
+							<br/><br/>
+							<p:commandButton value="Pesquisar" action="#{exampleBean.buscarPorNomeEnzima}" update="formSearch resultado"/>
 						</h:panelGroup>
 						<h:panelGroup rendered="#{exampleBean.pesquisaSelecionada == 'go'}">
 							<div class="card">
@@ -70,6 +72,8 @@
 								<br/>
 								<p:inputText placeholder="Nome da GO" value="#{exampleBean.nomeGo}"/>
 							</div>
+							<br/><br/>
+							<p:commandButton value="Pesquisar" action="#{exampleBean.buscarPorNomeGo}" update="formSearch resultado"/>
 						</h:panelGroup>
 						<h:panelGroup rendered="#{exampleBean.pesquisaSelecionada == 'proteina'}">
 							<div class="card">
@@ -85,16 +89,26 @@
 								<p:inputText placeholder="Termo da busca" value="#{exampleBean.buscaProteinaInput}"
 								required="true" requiredMessage="O termo de busca é obrigatório"/>
 							</div>
+							<br/><br/>
+							<p:commandButton value="Pesquisar" action="#{exampleBean.buscarProteina}" update="formSearch resultado"/>
 						</h:panelGroup>
+						<h:panelGroup rendered="#{exampleBean.pesquisaSelecionada == 'tudo'}">
 						<br/><br/>
-					 <p:commandButton value="Pesquisar" action="#{exampleBean.pesquisar}" update="formSearch"/>
+							<p:commandButton value="Pesquisar" action="#{exampleBean.buscarTudo}" update="formSearch resultado">
+								 <p:confirm header="Confirmar Pesquisa" 
+								 	message="Devido a grande quantidade de registros, a busca por todos os dados 
+								 		pode demorar. Deseja continuar?" 
+								 	icon="pi pi-exclamation-triangle"/>
+							</p:commandButton>
+						</h:panelGroup>
+						<br/><br/>					 
 				</p:fieldset>
 	
 			</div>
 			<br/>
 			<h:panelGroup rendered="#{not empty exampleBean.rows}">
 				<div class="card">
-					<p:dataTable var="row" value="#{exampleBean.rows}"
+					<p:dataTable id="resultado" var="row" value="#{exampleBean.rows}"
 						stripedRows="true" rows="5" paginator="true" showGridlines="true"						
 						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 						currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
@@ -172,7 +186,12 @@
 			</h:panelGroup>
 			<p:scrollTop target="parent" threshold="100" styleClass="custom-scrolltop" icon="pi pi-arrow-up" />			
 		</p:panel>
-	
+		
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">                        
+            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" />
+        </p:confirmDialog>
+        
 	</h:form> 
 		  
 		            
