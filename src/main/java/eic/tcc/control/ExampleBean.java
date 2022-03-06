@@ -131,6 +131,25 @@ public class ExampleBean extends _Bean {
 	}
 
 	
+	// método para usar no botão de pesquisar dados de todas as proteinas
+	@SuppressWarnings("unchecked")
+	public void buscarTudo() {
+		
+		// teste OK
+		List<Ccbh> allCcbhs = (List<Ccbh>) dao.queryHQL("SELECT c FROM Ccbh c");
+		
+		for (Ccbh c : allCcbhs) {
+			
+			// teste OK
+			c.setListaCcbhEnzyme((List<CcbhEnzyme>) dao.queryHQL("SELECT ce FROM CcbhEnzyme ce WHERE ce.ccbh.id = '" + c.getId() + "'"));
+			// teste OK
+			c.setListaCcbhBlast((List<CcbhBlast>) dao.queryHQL("SELECT cb FROM CcbhBlast cb WHERE cb.ccbh.id = '" + c.getId() + "'"));
+			// teste OK
+			c.setListaCcbhInter((List<CcbhInter>) dao.queryHQL("SELECT ci FROM CcbhInter ci WHERE ci.ccbh.id = '" + c.getId() + "'"));
+		}
+		rows.addAll(new SearchResult(allCcbhs).getRowList());
+	}
+	
 
 	public void selecionarCategoria(ValueChangeEvent event) {
 		categoriaSelecionada = (String) event.getNewValue();
