@@ -22,17 +22,16 @@ public class Enzyme {
 		this.code = code;
 		this.name = name;
 	}
-	
+
 	public Enzyme() {
-		
 	}
 
 	@Transient
 	private List<Ccbh> listaCcbh;
-	
+
 	@Transient
 	private List<CcbhBlast> listaCcbhBlast;
-	
+
 	@Transient
 	private List<CcbhInter> listaCcbhInter;
 
@@ -51,9 +50,7 @@ public class Enzyme {
 	public List<Ccbh> getListaCcbh() {
 		return listaCcbh;
 	}
-	
-	
-	
+
 	public List<CcbhBlast> getListaCcbhBlast() {
 		return listaCcbhBlast;
 	}
@@ -69,6 +66,4 @@ public class Enzyme {
 	public void setListaCcbhInter(List<CcbhInter> listaCcbhInter) {
 		this.listaCcbhInter = listaCcbhInter;
 	}
-
-	
 }

@@ -30,5 +30,4 @@ public class CcbhEnzyme implements Serializable {
 	public Enzyme getEnzyme() {
 		return enzyme;
 	}
-	
 }

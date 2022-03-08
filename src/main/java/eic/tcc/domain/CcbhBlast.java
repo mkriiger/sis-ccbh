@@ -45,7 +45,4 @@ public class CcbhBlast implements Serializable {
 	public String getHits() {
 		return hits;
 	}
-	
-
-	
 }

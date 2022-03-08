@@ -30,5 +30,4 @@ public class CcbhInter implements Serializable {
 	public InterPro getInter() {
 		return inter;
 	}
-	
 }

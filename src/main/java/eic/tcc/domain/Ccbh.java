@@ -2,7 +2,6 @@ package eic.tcc.domain;
 
 import java.util.List;
 import java.util.Objects;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -25,22 +24,22 @@ public class Ccbh {
 
 	@Column
 	private Integer length;
-	
+
 	@Transient
 	private List<CcbhBlast> listaCcbhBlast;
-	
+
 	@Transient
 	private List<CcbhInter> listaCcbhInter;
 
 	@Transient
 	private List<CcbhEnzyme> listaCcbhEnzyme;
-	
+
 	public String getId() {
 		return id;
 	}
 
 	public String getSeqName() {
-		return seqName.substring(14).replaceAll("[|]","");
+		return seqName.substring(14).replaceAll("[|]", "");
 	}
 
 	public String getDescription() {
@@ -58,9 +57,7 @@ public class Ccbh {
 	public void setListaCcbhBlast(List<CcbhBlast> listaCcbhBlast) {
 		this.listaCcbhBlast = listaCcbhBlast;
 	}
-	
-	
-	
+
 	public List<CcbhInter> getListaCcbhInter() {
 		return listaCcbhInter;
 	}
@@ -68,8 +65,6 @@ public class Ccbh {
 	public void setListaCcbhInter(List<CcbhInter> listaCcbhInter) {
 		this.listaCcbhInter = listaCcbhInter;
 	}
-	
-	
 
 	public List<CcbhEnzyme> getListaCcbhEnzyme() {
 		return listaCcbhEnzyme;
@@ -95,7 +90,4 @@ public class Ccbh {
 		Ccbh other = (Ccbh) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
-
 }

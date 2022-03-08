@@ -1,13 +1,11 @@
 package eic.tcc.domain;
 
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
 import eic.tcc.domain.enums.Categoria;
 
 @Entity
@@ -20,13 +18,13 @@ public class InterPro {
 
 	@Column(name = "interpro_go_name")
 	private String name;
-	
+
 	@Transient
 	private Categoria categoria;
 
 	@Transient
 	private List<Ccbh> listaCcbh;
-	
+
 	public String getId() {
 		return id;
 	}
@@ -58,8 +56,4 @@ public class InterPro {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
-
-	
-	
 }
-	

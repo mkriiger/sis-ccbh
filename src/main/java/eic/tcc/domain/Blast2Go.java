@@ -2,13 +2,11 @@ package eic.tcc.domain;
 
 import java.util.List;
 import java.util.Objects;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
 import eic.tcc.domain.enums.Categoria;
 
 @Entity
@@ -21,7 +19,7 @@ public class Blast2Go {
 
 	@Column(name = "blast2go_go_name")
 	private String name;
-	
+
 	@Transient
 	private Categoria categoria;
 
@@ -35,8 +33,7 @@ public class Blast2Go {
 	public String getName() {
 		return name;
 	}
-	
-	
+
 	public void setId(String id) {
 		this.id = id;
 	}
@@ -77,7 +74,4 @@ public class Blast2Go {
 		Blast2Go other = (Blast2Go) obj;
 		return Objects.equals(id, other.id);
 	}
-
-	
-
 }
