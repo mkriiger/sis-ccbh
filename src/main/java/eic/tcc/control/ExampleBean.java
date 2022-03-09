@@ -43,7 +43,7 @@ public class ExampleBean extends _Bean {
 				"Nenhum registro encontrado", "Nenhum registro encontrado"));
 	}
 
-	@SuppressWarnings({ "unchecked", "unused" })
+	@SuppressWarnings("unchecked")
 	public void buscarPorNomeEnzima() {
 
 		this.clear();
@@ -77,17 +77,12 @@ public class ExampleBean extends _Bean {
 		}
 	}
 
-	@SuppressWarnings({ "unchecked", "unused" })
+	@SuppressWarnings("unchecked")
 	public void buscarPorNomeGo() {
 
 		this.clear();
 
-		this.verificarNulo();
-
-		// List<Ccbh> allCcbhs = new ArrayList<>();
-		//
-		// REFACTOR COM DISTINCT TESTADO
-		//
+		this.verificarNulo();		
 
 		List<Ccbh> allCcbhs = (List<Ccbh>) dao
 				.queryHQL("SELECT DISTINCT e.ccbh FROM CcbhBlast e WHERE e.blast.name LIKE '"
@@ -122,7 +117,7 @@ public class ExampleBean extends _Bean {
 		}
 	}
 
-	@SuppressWarnings({ "unchecked", "unused" })
+	@SuppressWarnings("unchecked")
 	public void buscarProteina() {
 
 		this.clear();
@@ -161,7 +156,7 @@ public class ExampleBean extends _Bean {
 		}
 	}
 
-	@SuppressWarnings({ "unchecked", "unused" })
+	@SuppressWarnings("unchecked")
 	public void buscarTudo() {
 
 		this.clear();
