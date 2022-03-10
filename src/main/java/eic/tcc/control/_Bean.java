@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.primefaces.PrimeFaces;
+import org.primefaces.component.datatable.DataTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -209,10 +210,10 @@ public abstract class _Bean
 	 */
 	public void resetDataTableUI(String componentId)
 	{
-//		DataTable dataTable = (DataTable)findUIComponent(componentId);
+		DataTable dataTable = (DataTable)findUIComponent(componentId);
 //		dataTable.setValueExpression("sortBy", dataTable.getDefaultSortByVE());
 //		dataTable.setSortOrder(dataTable.getDefaultSortOrder());
-//		dataTable.setFirst(0);
+		dataTable.setFirst(0);
 	}
 	
 	/**

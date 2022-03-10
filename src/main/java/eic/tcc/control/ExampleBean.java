@@ -74,6 +74,8 @@ public class ExampleBean extends _Bean {
 
 		if (rows.size() == 0) {
 			retornaAviso();
+		} else {
+			this.resetDataTableUI("formSearch:resultado");
 		}
 	}
 
@@ -82,7 +84,7 @@ public class ExampleBean extends _Bean {
 
 		this.clear();
 
-		this.verificarNulo();		
+		this.verificarNulo();
 
 		List<Ccbh> allCcbhs = (List<Ccbh>) dao
 				.queryHQL("SELECT DISTINCT e.ccbh FROM CcbhBlast e WHERE e.blast.name LIKE '"
@@ -114,6 +116,8 @@ public class ExampleBean extends _Bean {
 
 		if (rows.size() == 0) {
 			retornaAviso();
+		} else {
+			this.resetDataTableUI("formSearch:resultado");
 		}
 	}
 
@@ -153,6 +157,8 @@ public class ExampleBean extends _Bean {
 
 		if (rows.size() == 0) {
 			retornaAviso();
+		} else {
+			this.resetDataTableUI("formSearch:resultado");
 		}
 	}
 
@@ -173,6 +179,8 @@ public class ExampleBean extends _Bean {
 					.queryHQL("SELECT ci FROM CcbhInter ci WHERE ci.ccbh.id = '" + c.getId() + "'"));
 		}
 		rows.addAll(new SearchResult(allCcbhs).getRowList());
+
+		this.resetDataTableUI("formSearch:resultado");
 	}
 
 	public void selecionarCategoria(ValueChangeEvent event) {
