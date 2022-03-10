@@ -2,12 +2,13 @@ package eic.tcc.control;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
+
 import javax.faces.event.ValueChangeEvent;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+
 import eic.tcc.dao.Dao;
 import eic.tcc.domain.Ccbh;
 import eic.tcc.domain.CcbhBlast;
@@ -38,11 +39,7 @@ public class ExampleBean extends _Bean {
 	private List<Ccbh> listAux = new ArrayList<>();
 	private List<ResultRow> rows = new ArrayList<>();
 
-	public void retornaAviso() {
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
-				"Nenhum registro encontrado", "Nenhum registro encontrado"));
-	}
-
+	
 	@SuppressWarnings("unchecked")
 	public void buscarPorNomeEnzima() {
 
@@ -71,12 +68,7 @@ public class ExampleBean extends _Bean {
 		}
 		result = new SearchResult(listAux);
 		rows.addAll(result.getRowList());
-
-		if (rows.size() == 0) {
-			retornaAviso();
-		} else {
-			this.resetDataTableUI("formSearch:resultado");
-		}
+		verificaResultado();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -114,11 +106,7 @@ public class ExampleBean extends _Bean {
 
 		rows.addAll(new SearchResult(listAux).getRowList());
 
-		if (rows.size() == 0) {
-			retornaAviso();
-		} else {
-			this.resetDataTableUI("formSearch:resultado");
-		}
+		verificaResultado();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -155,11 +143,7 @@ public class ExampleBean extends _Bean {
 
 		rows.addAll(new SearchResult(listAux).getRowList());
 
-		if (rows.size() == 0) {
-			retornaAviso();
-		} else {
-			this.resetDataTableUI("formSearch:resultado");
-		}
+		verificaResultado();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -198,6 +182,14 @@ public class ExampleBean extends _Bean {
 	private void verificarNulo() {
 		if (categoriaSelecionada == null)
 			categoriaSelecionada = "";
+	}
+	
+	private void verificaResultado() {
+		if (this.rows.size() == 0) {
+			this.popWarning("Nenhum registro encontrado");
+		} else {
+			this.resetDataTableUI("formSearch:resultado");
+		}
 	}
 
 	private void clear() {
